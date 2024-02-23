@@ -1,6 +1,6 @@
 'use client'
 import io from "socket.io-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Chat from "./_components/chat"
 
 const socket = io.connect("http://localhost:5000");
@@ -15,7 +15,32 @@ function App() {
       socket.emit("join_room", room);
       setShowChat(true);
     }
+    fetchData();
   };
+
+
+    const fetchData = async () => {
+      try {
+        const resp = await fetch("http://localhost:5000/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            phone: room,
+          }),
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          console.log("Response data:", data);
+        } else {
+          console.error("Failed to fetch data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+ 
 
   return (
     <div className="App">
@@ -30,8 +55,8 @@ function App() {
             }}
           />
           <input
-            type="text"
-            placeholder="Room ID..."
+            type="number"
+            placeholder="Enter Phone"
             onChange={(event) => {
               setRoom(event.target.value);
             }}

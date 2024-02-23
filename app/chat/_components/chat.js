@@ -71,7 +71,7 @@ function Chat({ socket, username, room }) {
         };
         setMessageList((list) => [...list, messageData]);
       }
-      // console.log(socket.on("receive_message"), "HIIIIII")
+      // console.log(socket.on("receive_message"), "HIIIIII");
     });
     
     return () => {

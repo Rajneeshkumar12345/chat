@@ -45,12 +45,31 @@ connection.once('open', () => {
 //         res.send(error);
 //     }
 // });
+const signSchema = new mongoose.Schema({
+    phone: String,
+    room: String,
+}, { timestamps: true });
+const signIn = mongoose.model("signups", signSchema);
+
+app.post("/signup", async (req, res) => {
+    try {
+        const data = req.body;
+
+        data.room = data.phone;
+        const newSignIn = new signIn(data);
+
+        await newSignIn.save();
+        res.send("Success");
+    } catch (error) {
+        console.log("Login Error", error);
+    }
+})
 
 const messageSchema = new mongoose.Schema({
     room: String,
     sender: String,
     content: String,
-},{timestamps:true})
+}, { timestamps: true })
 const Message = mongoose.model("Message", messageSchema);
 
 app.post("/chat_history", async (req, res) => {
@@ -69,7 +88,7 @@ app.post("/chat_history", async (req, res) => {
 
 app.get("/chat_history/:room", async (req, res) => {
     const data = req.params.room;
-   // console.log(data, "00000");
+    // console.log(data, "00000");
 
     try {
         const message = await Message.find({ room: data });
@@ -82,7 +101,7 @@ app.get("/chat_history/:room", async (req, res) => {
 
 app.delete("/chat_history/:room", async (req, res) => {
     const data = req.params.room;
-   // console.log(data, "00000");
+    // console.log(data, "00000");
 
     try {
         const message = await Message.deleteMany({ room: data });
