@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 
-
 const Page = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -56,7 +55,6 @@ const Page = () => {
 
                                     <div className="col-lg-12 loginbttm">
                                         <div className="col-lg-6 login-btm login-text">
-
                                         </div>
                                         <div className="col-lg-6 login-btm login-button">
                                             <button type="submit" className="btn btn-outline-primary">LOGIN</button>
@@ -69,7 +67,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>
-
+         
 
         </>
     )

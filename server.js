@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoutes = require("./app/routes/authRoutes");
 
+
 const app = express();
 app.use(cors());
 mongoose.connect(require("./app/config/keys").mongoURI, {
