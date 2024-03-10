@@ -1,36 +1,41 @@
 'use client'
 
 import React, { useState } from 'react'
-// import Login from './';
-// import Otp from './_components/Otp';
-// import Reset from './_components/Reset';
-// import Recovery from "./_components/Recovery"
 import { createContext } from 'react';
 import Login from "../login/_components/Login";
 import Otp from "../login/_components/Otp";
 import Reset from "../login/_components/Reset";
-import Recovery from "../login/_components/Recovery"
+// import Recovery from "../login/_components/Recovery"
 
 
 
-export const RecoveryContext = createContext();
+export const RecoveryContext = createContext(
+    {
+        page: "login",
+        setPage: () => { },
+        email: "",
+        setEmail: () => { },
+        otp: "",
+        setOtp: () => { },
+    }
+);
 const Page = () => {
     const [page, setPage] = useState("login");
-    const [email, setEmail] = useState();
-    const [otp, setOtp] = useState();
+    const [emails, setEmails] = useState("");
+    const [otp, setOtp] = useState("");
 
     function NavigateComponents() {
         if (page === "login") return <Login />;
         if (page === "otp") return <Otp />
         if (page === "reset") return <Reset />;
 
-        return <Recovery />
+        return <Login />
     }
 
     return (
         <>
             <RecoveryContext.Provider
-                value={{ page, setPage, email, setEmail, otp, setOtp }}
+                value={{ page, setPage, emails, setEmails, otp, setOtp }}
             >
                 <div className="flex justify-center items-center">
                     <NavigateComponents />

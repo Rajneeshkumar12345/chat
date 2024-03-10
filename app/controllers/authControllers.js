@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     }
     res.json({ user });
     console.log("User login Successfully");
-  } catch {
+  } catch(error) {
     res.status(400).json({ error: error.message });
   }
 }
