@@ -100,6 +100,10 @@ const Page = () => {
                         <div className="buttons d-grid">
                             <button type="submit" className="btn btn-primary">Sign up</button>
                         </div>
+                        <div className="Account" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: "10px" }}>
+                            <p>I have already an account <a href="/login" className='link-primary fw-bold'>Login</a></p>
+                        </div>
+
                     </form>
                 </div>
             </div>
