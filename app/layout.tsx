@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import toast, { Toaster } from 'react-hot-toast';
+import "bootstrap/dist/css/bootstrap.min.css";
+import toast, { Toaster } from "react-hot-toast";
 // import RecoveryContext from "./context/page";
-import  RecoveryContext  from "./context/RecoveryContext";
-
+import RecoveryContext from "./context/RecoveryContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <RecoveryContext>
-          {children}
-        </RecoveryContext>
-        <Toaster />
-      </body>
-    </html>
+    <>
+      <html lang="en">
+        <body className={inter.className}>
+          <RecoveryContext>{children}</RecoveryContext>
+          <Toaster />
+        </body>
+      </html>
+    </>
   );
 }
