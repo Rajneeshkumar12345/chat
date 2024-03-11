@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useContext } from "react";
-import { RecoveryContext } from "../../context/page";
+import { RecoveryContext } from "../../context/RecoveryContext";
 import toast from 'react-hot-toast';
 
 export default function () {
@@ -120,7 +120,7 @@ export default function () {
                 <div className="row pt-5">
                   <div className="col-6">
                     <button className="btn btn-outline-secondary w-100"
-                    onClick={() => setPage("login")}
+                      onClick={() => setPage("login")}
                     >Cancel</button>
                   </div>
                   <div className="col-6">

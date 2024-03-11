@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { RecoveryContext } from '@/app/context/page';
+import { RecoveryContext } from '../../context/RecoveryContext';
 import toast from 'react-hot-toast';
 
 function ChangePasswordForm() {

@@ -1,18 +1,17 @@
+"use client"
 import axios from "axios";
 import React from "react";
 import { useContext, useState } from "react";
-import { RecoveryContext } from "../../context/page";
+import { useRecoveryContext } from "../../context/RecoveryContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import toast from 'react-hot-toast';
 
 export default function () {
-  const { setPage, emails, setEmails, setOtp } = useContext(RecoveryContext);
+  const { setPage, email, setEmail, setOtp } = useRecoveryContext()
   const [password, setPassword] = useState("");
-   const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     console.log(email, password, "11");
     if (!email || !password) {
@@ -122,7 +121,7 @@ export default function () {
                 <div className="text-center text-lg-start mt-4 pt-2">
                   <button type="submit" className="btn btn-primary btn-lg"
                     style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>Login</button>
-                  <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+                  <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
                     className="link-danger">Register</a></p>
                 </div>
 

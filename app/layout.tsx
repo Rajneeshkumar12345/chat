@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import toast, { Toaster } from 'react-hot-toast';
+// import RecoveryContext from "./context/page";
+import  RecoveryContext  from "./context/RecoveryContext";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
-        <Toaster/>
-        </body>
+        <RecoveryContext>
+          {children}
+        </RecoveryContext>
+        <Toaster />
+      </body>
     </html>
   );
 }
