@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoutes = require("./app/routes/authRoutes");
-
-
+const bodyParser = require("body-parser");
 const app = express();
+// require('./routeHandler')(app)
+
 app.use(cors());
 mongoose.connect(require("./app/config/keys").mongoURI, {
   useNewUrlParser: true,
@@ -18,11 +19,12 @@ mongoose.connection.on('error', (error) => {
   console.error('MongoDB connection error:', error);
 });
 
-app.use(express.json());
+
+app.use(bodyParser.json());
 
 
 app.use("/api/auth", authRoutes);
-
+app.use("/files", express.static("files"));
 
 
 // app.use("/", (req, res) => {

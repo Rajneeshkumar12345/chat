@@ -1,7 +1,10 @@
-const User = require("../models/SignUp");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const User = require("../models/SignUp");
+const Cart = require("../models/Carts")
+const Product = require("../models/Products")
 
 exports.register = async (req, res) => {
   try {
@@ -19,21 +22,33 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
       throw new Error("User not found");
     }
+
     const isValidPassword = await bcrypt.compare(password, user.password);
-    console.log(isValidPassword, 'isValidPassword');
     if (!isValidPassword) {
       throw new Error("Invalid password");
     }
-    res.json({ user });
-    console.log("User login Successfully");
-  } catch(error) {
+
+    jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "9h" }, (err, token) => {
+      if (err) {
+        return res.status(500).json({ error: "Something went wrong, please try again later" });
+      }
+      res.status(200).json({
+        success: "You are logged in successfully!",
+        user: user,
+        auth: token,
+      });
+    });
+
+    console.log("User login successfully");
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
-}
+};
+
 
 function sendEmail({ recipient_email, OTP }) {
   return new Promise((resolve, reject) => {
@@ -95,4 +110,60 @@ exports.recoveryMail = (req, res) => {
   sendEmail(req.body)
     .then((response) => res.send(response.message))
     .catch((error) => res.status(500).send(error.message));
+}
+
+
+exports.getProducts = async (req, res) => {
+  const product = await Product.findOne();
+  return product;
+}
+
+exports.getProductById = async id => {
+  const product = await Product.findById();
+  return product;
+}
+
+exports.createProduct = async (req, res) => {
+  const { name, price } = req.body;
+  console.log(name, price)
+
+  try {
+
+    //return res.status(200).json({body:req.file});
+
+    let payload = {
+      name: req.body.name,
+      price: req.body.price,
+      image: req.file.originalname
+    }
+
+
+    let product = await Product.create(payload);
+    res.status(200).json({
+      status: true,
+      data: product
+    })
+  } catch (error) {
+    console.log(error, "hiiiiiiii");
+    return res.status(500).json({
+      error: error,
+      status: false
+    })
+  }
+  // const newproduct = await Product.create(payload);
+  // return newproduct;
+}
+
+exports.removeProduct = async id => {
+  const product = await Product.findByIdAndRemove(id);
+  return product
+}
+
+
+exports.cart = async (req, res) => {
+  const carts = await Cart.find().populate({
+    path: "items.productId",
+    select: "name price total"
+  });;
+  return carts[0];
 }
